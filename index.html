@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bub km sayang aku tdk?</title>
+    <style>
+        body {
+            background-color: pink;
+            color: #D62976;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #FFC1CC, #FFF);
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+
+        /* Kedip efek */
+        .flash-red {
+            animation: flash 0.5s infinite alternate;
+        }
+
+        @keyframes flash {
+            from {
+                background-color: pink;
+            }
+            to {
+                background-color: red;
+            }
+        }
+
+        /* Gaya bunga */
+        .flower {
+            position: absolute;
+            font-size: 2em;
+            color: pink;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bub, kamu sayang aku tidak?</h1>
+    <div class="buttons">
+        <button id="yesButton">Iyaaaa</button>
+        <button id="noButton">Tidakkkk</button>
+    </div>
+    <audio controls style="margin-top: 20px;">
+        <source src="https://on.soundcloud.com/wMWJ1WSC3XRp9ztN8.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="result"></div>
+
+    <script>
+        const yesButton = document.getElementById("yesButton");
+        const noButton = document.getElementById("noButton");
+        const result = document.getElementById("result");
+        let hasClickedYes = false;
+
+        // Fungsi saat tombol "Iyaaaa" ditekan
+        yesButton.addEventListener("click", () => {
+            hasClickedYes = true;
+            document.body.style.backgroundColor = "#FFC1CC";
+            result.innerHTML = "TERIMAKASIIIII ❤️❤️❤️❤️❤️";
+            result.style.fontSize = "2em";
+            result.style.color = "#FF69B4";
+
+            // Hapus emoji lama jika ada
+            document.querySelectorAll(".love-emoji").forEach(emoji => emoji.remove());
+
+            // Tambah emoji cinta
+            for (let i = 0; i < 50; i++) {
+                const loveEmoji = document.createElement("span");
+                loveEmoji.textContent = "❤️";
+                loveEmoji.classList.add("love-emoji");
+                loveEmoji.style.position = "absolute";
+                loveEmoji.style.left = `${Math.random() * 100}%`;
+                loveEmoji.style.top = `${Math.random() * 100}%`;
+                loveEmoji.style.fontSize = `${Math.random() * 2 + 1}em`;
+                document.body.appendChild(loveEmoji);
+            }
+        });
+
+        // Fungsi saat tombol "Tidakkkk" ditekan
+        noButton.addEventListener("click", () => {
+            // Jika sebelumnya sudah memencet "Iyaaaa"
+            if (hasClickedYes) {
+                document.body.style.backgroundColor = "pink";
+                document.querySelectorAll(".love-emoji").forEach(emoji => emoji.remove());
+                result.innerHTML = "HAYO KALAU UDAH DI PENCET, IYA IYA AJA DEH ";
+                result.style.color = "#D62976";
+
+                // Tampilkan emoji marah besar setelah pesan pertama
+                setTimeout(() => {
+                    result.innerHTML = "😡 tapi aku ttp marah kamu main mainin tombol nya aku susah bikin nya sayang";
+                    result.style.fontSize = "2em";
+                    result.style.color = "red";
+
+                    // Setelah 5 detik, tampilkan bunga
+                    setTimeout(() => {
+                        document.body.style.backgroundColor = "#FFEBEE";
+                        result.innerHTML = "";
+
+                        // Tambah bunga
+                        for (let i = 0; i < 50; i++) {
+                            const flower = document.createElement("span");
+                            flower.textContent = "🌸";
+                            flower.classList.add("flower");
+                            flower.style.left = `${Math.random() * 100}%`;
+                            flower.style.top = `${Math.random() * 100}%`;
+                            document.body.appendChild(flower);
+                        }
+                    }, 5000);
+                }, 2000);
+            } else {
+                document.body.classList.add("flash-red");
+                result.innerHTML = "OK FINE AKU MARAH 😠";
+                result.style.color = "red";
+                result.style.fontSize = "2em";
+
+                // Mainkan suara sirine
+                const siren = new Audio('https://www.soundjay.com/button/beep-09.wav');
+                siren.loop = true;
+                siren.play();
+
+                // Hentikan suara dan berkedip setelah 3 detik
+                setTimeout(() => {
+                    document.body.classList.remove("flash-red");
+                    siren.pause();
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
